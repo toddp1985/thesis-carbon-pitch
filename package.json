@@ -9,7 +9,7 @@
     "lint": "oxlint",
     "preview": "vite preview --host 127.0.0.1 --port 43174",
     "test": "node --experimental-strip-types src/lib/math.test.ts",
-    "deploy": "npm run build && wrangler deploy"
+    "deploy": "bash scripts/cf-deploy.sh"
   },
   "dependencies": {
     "gsap": "^3.15.0",

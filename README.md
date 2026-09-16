@@ -4,35 +4,30 @@ Interactive investor memorandum **to Thesis**: institutional prediction markets 
 
 Written as a note from Todd Peoples (Thesis investor) to Thesis partners. Thesis-forward. Desktop-first for a pitch meeting; usable on a phone.
 
-Hosted on **Cloudflare Workers only**. Not Vercel. Not GitHub Pages.
+Hosted on **Cloudflare Workers production only**. Not Vercel. Not GitHub Pages. Not Cursor claim-preview sandboxes.
 
 ## Live URL
 
-**https://thesis-carbon-pitch.tranquil-thrill.workers.dev**
+**Pending production deploy to Todd’s Cloudflare account.**
 
-This is a Cloudflare Workers static deploy of the storyboard.
+The worker name is `thesis-carbon-pitch`. After `CLOUDFLARE_API_TOKEN` is in this environment (or in GitHub Actions secrets), `npm run deploy` publishes to:
 
-### Make it durable (claim into Todd’s Cloudflare account)
+`https://thesis-carbon-pitch.<your-workers-subdomain>.workers.dev`
 
-The agent environment cannot log into a production Cloudflare account, so the first publish uses Cloudflare’s preview-account path. **Claim it within 60 minutes of publish** so the Worker moves onto your account and stops expiring:
+That URL does not expire. This repo will not publish another `*.puddle-backpack.workers.dev` / `*.tranquil-thrill.workers.dev` claim-token preview.
 
-[Claim this Cloudflare Worker](https://dash.cloudflare.com/claim-preview?claimToken=6F-2lUbGtEdC4YEjxqXcVp_kKJOAAPifJJcPRLJ4z1w)
+### Deploy to Todd’s account
 
-After claim, the Worker is a normal production Worker on your account. Keep it at the `workers.dev` URL above, or attach a custom domain in the Cloudflare dashboard.
+Create an API token at [Cloudflare API Tokens](https://dash.cloudflare.com/profile/api-tokens) with **Workers Scripts: Edit** and **Account Settings: Read**. Then either:
 
-### Lasting production deploys from GitHub
-
-Add these repository secrets on [toddp1985/thesis-carbon-pitch](https://github.com/toddp1985/thesis-carbon-pitch), then every push to `main` publishes production via Wrangler:
-
-- `CLOUDFLARE_API_TOKEN`
-- `CLOUDFLARE_ACCOUNT_ID`
-
-Workflow: `.github/workflows/cloudflare.yml`.
+1. Put `CLOUDFLARE_API_TOKEN` (and `CLOUDFLARE_ACCOUNT_ID` if the token can see more than one account) in this Cloud Agent environment and ask the agent to run `npm run deploy`, or
+2. Add the same values as GitHub Actions secrets on [toddp1985/thesis-carbon-pitch](https://github.com/toddp1985/thesis-carbon-pitch). Workflow: `.github/workflows/cloudflare.yml`.
 
 ```bash
-npm run build
-npx wrangler deploy
+npm run deploy
 ```
+
+`scripts/cf-deploy.sh` refuses `wrangler deploy --temporary`.
 
 Source: [toddp1985/thesis-carbon-pitch](https://github.com/toddp1985/thesis-carbon-pitch)
 
@@ -93,4 +88,4 @@ npm run preview
 - No named market-making firm. Institutional / SIG-style desk language only.
 - Thesis branding and investor-memo tone throughout.
 - three.js scene morphs with chapter; GSAP handles copy transitions; `prefers-reduced-motion` is respected.
-- Hosting is Cloudflare Workers. No Vercel.
+- Hosting is Cloudflare Workers production on Todd’s account. No Vercel. No expiring claim-preview sandboxes.
