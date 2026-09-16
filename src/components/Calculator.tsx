@@ -150,7 +150,92 @@ export function Calculator({ value, onChange }: Props) {
         <Stat label="Desk margin posted" value={formatUsd(result.deskMargin)} hint="annual notional" />
       </div>
 
+      <WorkingCapitalBars
+        bufferPct={value.bufferPct}
+        premiumPct={value.premiumPct}
+        trapped={result.trappedPerYear}
+        premium={result.premiumPerYear}
+        cashBuffer={result.cashBufferAnnual}
+        cashHedge={result.cashHedgeAnnual}
+        gross={result.grossAnnual}
+      />
       <CashChart series={result.series} />
+    </div>
+  )
+}
+
+function WorkingCapitalBars({
+  bufferPct,
+  premiumPct,
+  trapped,
+  premium,
+  cashBuffer,
+  cashHedge,
+  gross,
+}: {
+  bufferPct: number
+  premiumPct: number
+  trapped: number
+  premium: number
+  cashBuffer: number
+  cashHedge: number
+  gross: number
+}) {
+  return (
+    <div className="mt-5 rounded-sm border border-line bg-ink/50 p-3">
+      <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-mute">
+        Year-1 cash vs trapped inventory · updates with sliders
+      </p>
+      <div className="mt-3 grid gap-3 md:grid-cols-2">
+        <Split
+          label="Buffer path"
+          leftPct={bufferPct}
+          leftColor="#c4a572"
+          leftText={`${bufferPct.toFixed(1)}% trapped · ${formatUsd(trapped)}`}
+          rightText={`${(100 - bufferPct).toFixed(1)}% cash · ${formatUsd(cashBuffer)}`}
+        />
+        <Split
+          label="Thesis hedge"
+          leftPct={premiumPct}
+          leftColor="#8a7349"
+          leftText={`${premiumPct.toFixed(1)}% premium · ${formatUsd(premium)}`}
+          rightText={`${(100 - premiumPct).toFixed(1)}% cash · ${formatUsd(cashHedge)}`}
+        />
+      </div>
+      <p className="mt-2 font-mono text-[10px] text-mute">
+        Gross vintage {formatUsd(gross)} / year. Both bars are that same dollar.
+      </p>
+    </div>
+  )
+}
+
+function Split({
+  label,
+  leftPct,
+  leftColor,
+  leftText,
+  rightText,
+}: {
+  label: string
+  leftPct: number
+  leftColor: string
+  leftText: string
+  rightText: string
+}) {
+  const width = Math.min(92, Math.max(6, leftPct))
+  return (
+    <div>
+      <p className="mb-1.5 font-serif text-lg text-paper">{label}</p>
+      <div className="flex h-10 overflow-hidden rounded-sm border border-line">
+        <div className="flex items-center px-2" style={{ width: `${width}%`, background: leftColor }}>
+          <span className="truncate font-mono text-[9px] text-ink">{leftPct.toFixed(0)}%</span>
+        </div>
+        <div className="flex flex-1 items-center bg-liquid/25 px-2">
+          <span className="truncate font-mono text-[9px] text-paper-dim">cash</span>
+        </div>
+      </div>
+      <p className="mt-1 text-[11px] text-gold">{leftText}</p>
+      <p className="text-[11px] text-liquid">{rightText}</p>
     </div>
   )
 }
