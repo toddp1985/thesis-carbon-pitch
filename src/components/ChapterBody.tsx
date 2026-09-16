@@ -260,7 +260,7 @@ function Pitch() {
         <IllustrativeBadge tone="verified">Pilot door is open</IllustrativeBadge>
       </div>
       <P>
-        The substitution is simple enough to put on one slide. Sell one hundred percent of the
+        The substitution is simple enough to put on one page. Sell one hundred percent of the
         vintage. Pay Thesis a cash premium targeting roughly 2.5–5% of exposed asset value per
         year. All-in cash cost stays well inside the 12–20% inventory tax — if, and only if, the
         registry accepts the hedge in lieu of the physical buffer.
