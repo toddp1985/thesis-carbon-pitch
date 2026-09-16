@@ -1,0 +1,62 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-serif: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --color-ink: #090b0e;
+  --color-ink-2: #10141a;
+  --color-ink-3: #171d26;
+  --color-paper: #f3efe6;
+  --color-paper-dim: #c9c2b3;
+  --color-mute: #8d8678;
+  --color-gold: #c4a572;
+  --color-gold-2: #8a7349;
+  --color-risk: #c45c4a;
+  --color-liquid: #6b9e8a;
+  --color-line: rgba(196, 165, 114, 0.22);
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+  background: #090b0e;
+  color: #f3efe6;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgba(196, 165, 114, 0.35);
+  color: #f3efe6;
+}
+
+button,
+a,
+input,
+[role='slider'] {
+  outline: none;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  box-shadow: 0 0 0 2px #090b0e, 0 0 0 4px #c4a572;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
