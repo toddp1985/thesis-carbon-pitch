@@ -4,11 +4,37 @@ Interactive investor memorandum **to Thesis**: institutional prediction markets 
 
 Written as a note from Todd Peoples (Thesis investor) to Thesis partners. Thesis-forward. Desktop-first for a pitch meeting; usable on a phone.
 
+Hosted on **Cloudflare Workers only**. Not Vercel. Not GitHub Pages.
+
 ## Live URL
 
-**https://toddp1985.github.io/thesis-carbon-pitch/**
+**https://thesis-carbon-pitch.tranquil-thrill.workers.dev**
 
-Durable GitHub Pages deploy from this repository. Source: [toddp1985/thesis-carbon-pitch](https://github.com/toddp1985/thesis-carbon-pitch).
+This is a Cloudflare Workers static deploy of the storyboard.
+
+### Make it durable (claim into Todd’s Cloudflare account)
+
+The agent environment cannot log into a production Cloudflare account, so the first publish uses Cloudflare’s preview-account path. **Claim it within 60 minutes of publish** so the Worker moves onto your account and stops expiring:
+
+[Claim this Cloudflare Worker](https://dash.cloudflare.com/claim-preview?claimToken=6F-2lUbGtEdC4YEjxqXcVp_kKJOAAPifJJcPRLJ4z1w)
+
+After claim, the Worker is a normal production Worker on your account. Keep it at the `workers.dev` URL above, or attach a custom domain in the Cloudflare dashboard.
+
+### Lasting production deploys from GitHub
+
+Add these repository secrets on [toddp1985/thesis-carbon-pitch](https://github.com/toddp1985/thesis-carbon-pitch), then every push to `main` publishes production via Wrangler:
+
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID`
+
+Workflow: `.github/workflows/cloudflare.yml`.
+
+```bash
+npm run build
+npx wrangler deploy
+```
+
+Source: [toddp1985/thesis-carbon-pitch](https://github.com/toddp1985/thesis-carbon-pitch)
 
 ## What this is
 
@@ -62,20 +88,9 @@ npm run build
 npm run preview
 ```
 
-GitHub Pages builds with `GITHUB_PAGES=true` so asset URLs use the `/thesis-carbon-pitch/` base path.
-
-## Deploy
-
-GitHub Pages is the durable public host. The workflow in `.github/workflows/pages.yml` builds and publishes on every push to `main`.
-
-```bash
-GITHUB_PAGES=true npm run build
-```
-
-Optional: `npx wrangler deploy` for a Cloudflare Workers account you already own. Do not use unclaimed temporary preview accounts for sharing.
-
 ## Constraints honored
 
 - No named market-making firm. Institutional / SIG-style desk language only.
 - Thesis branding and investor-memo tone throughout.
 - three.js scene morphs with chapter; GSAP handles copy transitions; `prefers-reduced-motion` is respected.
+- Hosting is Cloudflare Workers. No Vercel.
