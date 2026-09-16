@@ -17,12 +17,28 @@
   --color-line: rgba(196, 165, 114, 0.22);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body,
 #root {
   min-height: 100%;
   background: #090b0e;
   color: #f3efe6;
+}
+
+.hero-grid {
+  background-image:
+    linear-gradient(rgba(196, 165, 114, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(196, 165, 114, 0.07) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mask-image: radial-gradient(ellipse at 40% 60%, #000 28%, transparent 78%);
+}
+
+input[type='range'] {
+  accent-color: #c4a572;
 }
 
 body {
@@ -51,6 +67,10 @@ input:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
   *,
   *::before,
   *::after {
